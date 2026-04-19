@@ -1,13 +1,52 @@
+'use client'
+
+import AuthPage from '@/components/ui/landing/auth/AuthPage'
 import Image from 'next/image'
-import React from 'react'
+import { useState } from 'react'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from "next/navigation";
+
 
 const ClientPage = () => {
+  const [mode, setMode] = useState<"login" | "register">("login")
+  const router = useRouter();
+  const { login, register, loading } = useAuth()
+  
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+
+  const handleSubmit = async () => {
+  let res;
+
+  if (mode === "login") {
+    res = await login(form.email, form.password);
+  } else {
+    res = await register(form.name, form.email, form.password);
+  }
+
+  if (res) {
+    router.push("/dashboard");
+  }
+};
+
+
   return (
       <>
           {/* INPUTS */}
       <div className='w-full h-full grid place-items-center'>
 
-              <h1></h1>
+        <AuthPage
+          mode={mode}
+          setMode={setMode}
+          handleSubmit={handleSubmit}
+          form={form}
+          setForm={setForm}
+          loading={loading}
+        />
+
             
       </div>
       {/* IMAGE */}
