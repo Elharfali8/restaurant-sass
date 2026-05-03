@@ -47,7 +47,7 @@ const Sidebar = ({
 
   return (
     <aside
-      className={`hidden lg:block bg-white shadow-lg transition-all duration-300 ${
+      className={`hidden lg:block bg-white shadow-xl transition-all duration-300 relative z-20  ${
         collapsed ? 'w-20' : 'w-70'
       }`}
     >

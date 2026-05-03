@@ -29,8 +29,8 @@ const DashboardShell = ({
         toggleSidebar={toggleSidebar}
       />
 
-      <div className='flex flex-col bg-gray-200'>
-        <div className='h-16 border-b bg-white px-6 flex items-center'>
+      <div className='flex flex-col bg-gray-50'>
+        <div className='h-16 shadow-lg bg-white px-6 flex items-center'>
           NAVBAR
         </div>
 

@@ -17,25 +17,25 @@ export const sidebarItems: SidebarItem[] = [
     {
         id: 2,
         title: 'Orders',
-        path: '/orders',
+        path: '/dashboard/orders',
         icon: ShoppingCart
     },
     {
         id: 3,
         title: 'Products',
-        path: '/products',
+        path: '/dashboard/products',
         icon: Package
     },
     {
         id: 4,
         title: 'Customers',
-        path: '/customers',
+        path: '/dashboard/customers',
         icon: Users
     },
     {
         id: 5,
         title: 'Settings',
-        path: '/settings',
+        path: '/dashboard/settings',
         icon: Settings
     }
 ];
