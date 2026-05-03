@@ -21,7 +21,7 @@ const DashboardShell = ({
       className={`h-screen grid transition-all duration-300 ${
         collapsed
           ? 'lg:grid-cols-[80px_1fr]'
-          : 'lg:grid-cols-[300px_1fr]'
+          : 'lg:grid-cols-[280px_1fr]'
       }`}
     >
       <Sidebar

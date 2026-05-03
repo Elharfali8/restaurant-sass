@@ -2,12 +2,14 @@
 
 import { sidebarItems } from '@/utils/contants'
 import {
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 type SidebarProps = {
   collapsed: boolean
@@ -19,12 +21,34 @@ const Sidebar = ({
   toggleSidebar,
 }: SidebarProps) => {
 
+  const [user, setUser] = useState<any>(null)
   const pathname = usePathname()
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("/api/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setUser(data);
+      }
+    };
+
+    fetchUser();
+  }, []);
+  
 
   return (
     <aside
       className={`hidden lg:block bg-white shadow-lg transition-all duration-300 ${
-        collapsed ? 'w-20' : 'w-75'
+        collapsed ? 'w-20' : 'w-70'
       }`}
     >
       <div className='h-full flex flex-col justify-between'>
@@ -39,7 +63,7 @@ const Sidebar = ({
           >
             <Link
               href='/dashboard'
-              className='flex items-center gap-x-2'
+              className='flex items-center'
             >
               <Image
               src='/assets/logo.png'
@@ -61,7 +85,7 @@ const Sidebar = ({
             {!collapsed && (
               <button
                 onClick={toggleSidebar}
-                className='cursor-pointer bg-gray-100 p-2 rounded-lg shadow-md  transition hover:scale-[1.2]'
+                className='cursor-pointer p-2 rounded-lg shadow-md transition hover:scale-[1.01] hover:shadow-xl'
               >
                 <ChevronLeft />
               </button>
@@ -72,15 +96,19 @@ const Sidebar = ({
             <div className='flex justify-center'>
               <button
                 onClick={toggleSidebar}
-                className='cursor-pointer bg-gray-100 p-2 rounded-lg shadow-md  transition hover:scale-[1.2]'
+                className='cursor-pointer bg-white p-2 rounded-lg shadow-md  transition hover:scale-[1.2]'
               >
                 <ChevronRight />
               </button>
             </div>
           )}
 
+          <p className='mt-8 mb-4 px-4 uppercase font-semibold text-gray-700'>
+            menu
+          </p>
+
           {/* nav links */}
-          <ul className='px-4 mt-16 grid gap-y-3'>
+          <ul className='px-4 grid gap-y-3'>
             {sidebarItems.map((link) => {
               const {
                 id,
@@ -94,25 +122,25 @@ const Sidebar = ({
               return (
                 <li
                   key={id}
-                  className={`p-3 shadow-md rounded-md transition-all hover:scale-[1.05] ${
+                  className={`px-3 py-4 shadow-md rounded-md transition-all hover:scale-[1.05] ${
                     isActive
                       ? 'bg-orange-500 text-white'
-                      : 'bg-gray-50 text-black'
+                      : 'bg-white text-gray-600'
                   }`}
                 >
                   <Link
                     href={path}
-                    className={`flex items-center text-xl ${
+                    className={`flex items-center font-semibold text-lg ${
                       collapsed
                         ? 'justify-center'
                         : 'gap-3'
                     }`}
                   >
                     <Icon
-                      className={`w-5 h-5 flex-shrink-0 ${
+                      className={`w-5 h-5 shrink-0 ${
                         isActive
                           ? 'text-white'
-                          : 'text-gray-700'
+                          : 'text-gray-600'
                       }`}
                     />
 
@@ -128,19 +156,21 @@ const Sidebar = ({
 
         {/* bottom buttons */}
         <div className='grid gap-y-3 mb-4 px-2'>
+          <div className='my-3 w-full h-0.5 bg-gray-400' />
           <button
-            className={`flex items-center justify-center py-2 shadow-md rounded-xl cursor-pointer transition hover:scale-[1.02] text-lg font-medium ${
+            className={`flex items-center  p-2 shadow-md rounded-xl cursor-pointer transition hover:scale-[1.02] text-lg font-medium ${
               collapsed
-                ? 'px-2'
-                : 'gap-x-2 w-full'
+                ? 'px-2 justify-center'
+                : 'gap-x-2 w-full justify-between'
             } bg-gray-800 text-white hover:bg-gray-800/80`}
           >
-            <span>
+            {/*  */}
+            <div className='flex items-center gap-x-2 '>
+              <span className='w-10 h-10 border rounded-full border-gray-400 flex items-center justify-center'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'
                 height='24'
-                viewBox='0 0 24 24'
                 fill='none'
                 stroke='currentColor'
                 strokeWidth='2'
@@ -157,7 +187,21 @@ const Sidebar = ({
               </svg>
             </span>
 
-            {!collapsed && 'Profile'}
+            {!collapsed && (
+              <span className='grid text-sm text-gray-400 capitalize'>
+                <span className='text-white font-bold'>{user?.name}</span>
+                admin
+              </span>
+            )}
+            </div>
+            {/*  */}
+            {!collapsed && (
+              <div>
+              <span>
+                <ArrowRight />
+                </span>
+            </div>
+            )}
           </button>
 
           <button
