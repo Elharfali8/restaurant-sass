@@ -4,6 +4,7 @@
 
 import { useState } from 'react'
 import Sidebar from './Sidebar'
+import Navbar from './Navbar'
 
 const DashboardShell = ({
   children,
@@ -30,9 +31,7 @@ const DashboardShell = ({
       />
 
       <div className='flex flex-col bg-gray-50'>
-        <div className='h-16 shadow-lg bg-white px-6 flex items-center'>
-          NAVBAR
-        </div>
+        <Navbar />
 
         <main className='flex-1 p-6 overflow-y-auto'>
           {children}

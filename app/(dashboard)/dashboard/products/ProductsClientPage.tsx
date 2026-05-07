@@ -27,13 +27,11 @@ type Product = {
 
 const ProductsClientPage = () => {
   const [loading, setLoading] = useState(false)
-
   const [products, setProducts] = useState<Product[]>([])
-
   const [categories, setCategories] = useState<string[]>([])
-
   const [selectedCategory, setSelectedCategory] =
-    useState('')
+      useState('')
+    const [selectedStatus, setSelectedStatus] = useState('')
 
   useEffect(() => {
     setLoading(true)
@@ -141,18 +139,22 @@ const ProductsClientPage = () => {
       </div>
 
       {/* CONTENT */}
-
       <div className='p-4 rounded-xl bg-white shadow-lg mt-6 lg:mt-10'>
 
         <Filters
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={
-            setSelectedCategory
-          }
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
         />
 
-        {/* PRODUCTS */}
+              {/* PRODUCTS */}
+              {products.length > 0 && (
+                  <div className='p-3 bg-gray-50 mt-4 lg:mt-8 rounded-xl'>
+                      
+                  </div>
+              )}
 
       </div>
 
